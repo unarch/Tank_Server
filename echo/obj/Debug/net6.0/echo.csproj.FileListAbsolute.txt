@@ -13,3 +13,18 @@
 /Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/ref/echo.dll
 /Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.pdb
 /Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.genruntimeconfig.cache
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/bin/Debug/net6.0/echo
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/bin/Debug/net6.0/echo.deps.json
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/bin/Debug/net6.0/echo.runtimeconfig.json
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/bin/Debug/net6.0/echo.dll
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/bin/Debug/net6.0/echo.pdb
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.csproj.AssemblyReference.cache
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.AssemblyInfoInputs.cache
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.AssemblyInfo.cs
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.csproj.CoreCompileInputs.cache
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.dll
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/ref/echo.dll
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.pdb
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/echo.genruntimeconfig.cache
+/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/Debug/net6.0/refint/echo.dll

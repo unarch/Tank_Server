@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/Users/luowentao/Desktop/echo/echo/echo.csproj": {}
+    "/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/echo.csproj": {}
   },
   "projects": {
-    "/Users/luowentao/Desktop/echo/echo/echo.csproj": {
+    "/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/echo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/luowentao/Desktop/echo/echo/echo.csproj",
+        "projectUniqueName": "/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/echo.csproj",
         "projectName": "echo",
-        "projectPath": "/Users/luowentao/Desktop/echo/echo/echo.csproj",
+        "projectPath": "/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/echo.csproj",
         "packagesPath": "/Users/luowentao/.nuget/packages/",
-        "outputPath": "/Users/luowentao/Desktop/echo/echo/obj/",
+        "outputPath": "/Users/luowentao/Library/Mobile Documents/com~apple~CloudDocs/book/echo/echo/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/Users/luowentao/.nuget/NuGet/NuGet.Config"
@@ -43,7 +43,8 @@
             "net47",
             "net471",
             "net472",
-            "net48"
+            "net48",
+            "net481"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -52,7 +53,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/Cellar/dotnet/6.0.100/libexec/sdk/6.0.100/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/6.0.400/RuntimeIdentifierGraph.json"
         }
       }
     }
