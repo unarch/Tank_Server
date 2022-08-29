@@ -1,0 +1,15 @@
+/Users/luowentao/Desktop/echo/echo/bin/Debug/net6.0/echo
+/Users/luowentao/Desktop/echo/echo/bin/Debug/net6.0/echo.deps.json
+/Users/luowentao/Desktop/echo/echo/bin/Debug/net6.0/echo.runtimeconfig.json
+/Users/luowentao/Desktop/echo/echo/bin/Debug/net6.0/echo.dll
+/Users/luowentao/Desktop/echo/echo/bin/Debug/net6.0/ref/echo.dll
+/Users/luowentao/Desktop/echo/echo/bin/Debug/net6.0/echo.pdb
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.csproj.AssemblyReference.cache
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.GeneratedMSBuildEditorConfig.editorconfig
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.AssemblyInfoInputs.cache
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.AssemblyInfo.cs
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.csproj.CoreCompileInputs.cache
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.dll
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/ref/echo.dll
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.pdb
+/Users/luowentao/Desktop/echo/echo/obj/Debug/net6.0/echo.genruntimeconfig.cache
