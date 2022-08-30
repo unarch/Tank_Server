@@ -4,9 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 
 [Serializable]
-public class Player
+public class PlayerData
 {
-    public int coin = 0;
-    public int money = 0;
-    public string name = "";
+    public int score = 0;
+    public PlayerData()
+    {
+        this.score = 100;
+    }
 }

@@ -10,8 +10,7 @@ using System.Timers;
 
 class MainClass
 {
-    static string str = "";
-
+    
     public static void Main(string[] args)
     {
         Console.WriteLine("Hello xx");

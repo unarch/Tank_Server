@@ -1,11 +1,15 @@
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Security.AccessControl;
+using System.IO;
+using System.Net.Sockets;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-
+using System.Net;
+using System.Timers;
+using System.Threading;
 public class ThreadDemo
 {
+    static string str = "";
     // 线程1
     public static void Add1()
     {
@@ -56,7 +60,7 @@ public class ThreadDemo
     {
         IFormatter formatter = new BinaryFormatter();
         Stream stream = new FileStream("data.bin", FileMode.Open, FileAccess.Read, FileShare.Read);
-        Player player = (Player)formatter.Deserialize(stream);
+        DemoPlayer player = (DemoPlayer)formatter.Deserialize(stream);
         stream.Close();
         // 输出验证
         Console.WriteLine("coin : {0}", player.coin);
@@ -66,7 +70,7 @@ public class ThreadDemo
     // 序列化
     void Serialize()
     {
-        Player player = new Player();
+        DemoPlayer player = new DemoPlayer();
         player.coin = 1;
         player.money = 10;
         player.name = "XiaoMing";
