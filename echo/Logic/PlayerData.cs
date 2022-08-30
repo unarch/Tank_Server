@@ -9,6 +9,6 @@ public class PlayerData
     public int score = 0;
     public PlayerData()
     {
-        this.score = 100;
+        score = 100;
     }
 }
