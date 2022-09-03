@@ -14,9 +14,22 @@ class MainClass
 
     public static void Main(string[] args)
     {
+        DataMgr dataMgr = new DataMgr();
         ServeNet serveNet = new ServeNet();
         serveNet.Start("127.0.0.1", 1234);
-        Console.ReadLine();
+        // Console.ReadLine();
+        while(true) {
+            string? str = Console.ReadLine();
+            switch(str)
+            {
+                case "quit":
+                    serveNet.Close();
+                    return;
+                case "print":
+                    serveNet.Print();
+                    break;
+            }
+        }
     }
 
 }

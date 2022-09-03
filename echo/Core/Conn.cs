@@ -38,7 +38,7 @@ public class Conn
         isUse = true;
         buffCount = 0;
         // 心跳处理 
-        // lastTickTime = Sys.GetTimeStamp();
+        lastTickTime = Sys.GetTimeStamp();
     }
     // 剩余的Buff
     public int BuffRemain()
@@ -68,5 +68,8 @@ public class Conn
     }
 
     // 发送协议，相关内容稍后实现
-    // public void Send()
+    public void Send(ProtocolBase protocol)
+    {
+        ServeNet.instance!.Send(this, protocol);
+    }
 }

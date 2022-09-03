@@ -1,3 +1,4 @@
+using System.Reflection;
 using System.Net.Sockets;
 using System;
 using System.Collections.Generic;
@@ -22,12 +23,34 @@ public class ServeNet
         // 数据库
     MySqlConnection? sqlConn;
 
-    // 服务器名字
+    // 数据库名字
     public static string databaseName = "game";
+
+
+    // 协议
+    public ProtocolBase protocol;
+
+    // 打印信息
+    public void Print()
+    {
+        Console.WriteLine("===服务器登录信息===");
+        for (int i = 0; i < conns.Length; i++)
+        {
+            if (conns[i] == null) continue;
+            if (!conns[i].isUse) continue;
+            string str = "连接[" + conns[i].GetAddress() + "] ";
+            if (conns[i].player != null)
+                str += "玩家id " + conns[i].player!.id;
+            Console.WriteLine(str);
+        }
+    }
+    
     
     public ServeNet()
     {
         instance = this;
+        conns = new Conn[]{};
+        protocol = new ProtocolBytes();
     }
 
     // 获取连接池索引， 返回负数表示获取失败
@@ -49,6 +72,11 @@ public class ServeNet
         // 开启服务器
     public void Start(string host, int port) 
     {
+        // 定时器
+        timer.Elapsed += new System.Timers.ElapsedEventHandler(HandleMainTimer);
+        timer.AutoReset = false;
+        timer.Enabled = true;
+
         // 数据库
         string connStr = "Database=" + databaseName + ";Data Source=127.0.0.1;";
         connStr += "User Id=root;Password=00000000;port=3306";
@@ -142,9 +170,9 @@ public class ServeNet
         // 如果消息不足一组消息
         if (conn.buffCount < conn.msgLength + sizeof(Int32)) return;
         // 处理消息
-        string str = System.Text.Encoding.UTF8.GetString(conn.readBuff, sizeof(Int32), conn.msgLength);
-        Console.WriteLine("收到消息 [" + conn.GetAddress() + "]" + str);
-        Send(conn, str);
+        ProtocolBase newProtocol = protocol.Decode(conn.readBuff, sizeof(Int32), conn.msgLength);
+        HandleMsg(conn, newProtocol);
+        
 
         // 清除已发送的消息
         int count = conn.buffCount - conn.msgLength - sizeof(Int32);
@@ -157,20 +185,64 @@ public class ServeNet
 
     }
 
-    // 发送
-    public void Send(Conn conn, string str) 
+    private void HandleMsg(Conn conn, ProtocolBase protocolBase)
     {
-        byte[] bytes = System.Text.Encoding.UTF8.GetBytes(str);
+        string name = protocolBase.GetName();
+        Console.WriteLine("[收到协议]" + name);
+        string methodName = "Msg" + name;
+
+        // 连接协议分发
+        if (conn.player == null || name == "HeatBeat" || name == "Logout")
+        {
+            MethodInfo? methodInfo = handleConnMsg.GetType().GetMethod(methodName);
+            if (methodInfo == null) {
+                string str = "[警告⚠️]HandleMsg 没有处理连接方法 ";
+                Console.WriteLine(str + methodName);
+                return;
+            }
+            Object[] obj = new object[]{conn, protocolBase};
+            Console.WriteLine("[处理连接消息]" + conn.GetAddress() + " : " + name);
+            methodInfo.Invoke(handleConnMsg, obj);
+        }
+        // 角色协议分发
+        else 
+        {
+            MethodInfo? methodInfo = handlePlayerMsg.GetType().GetMethod(methodName);
+            if (methodInfo == null) {
+                string str = "[警告⚠️]HandleMsg 没有处理玩家方法 ";
+                Console.WriteLine(str + methodName);
+                return;
+            }
+            Object[] obj = new Object[]{conn.player, protocolBase};
+            Console.WriteLine("[处理玩家消息]" + conn.player.id + " : " + name);
+            methodInfo.Invoke(handlePlayerMsg, obj);
+        }
+    }
+
+    // 发送
+    public void Send(Conn conn, ProtocolBase protocol) 
+    {
+        byte[] bytes = protocol.Encode();
         byte[] length = BitConverter.GetBytes(bytes.Length);
         byte[] sendBuff = length.Concat(bytes).ToArray();
         try 
         {
-            conn.socket.BeginSend(sendBuff, 0, sendBuff.Length, SocketFlags.None, null, null);
+            conn.socket!.BeginSend(sendBuff, 0, sendBuff.Length, SocketFlags.None, null, null);
         } catch (Exception e) {
-            Console.WriteLine("[发送消息]" + conn.GetAddress() + " : " + e.Message);
+            Console.WriteLine("[发送消息] " + conn.GetAddress() + " : " + e.Message);
         }
     }
 
+    // 广播📢
+    public void Broadcast(ProtocolBase protocol)
+    {
+        for (int i = 0; i < conns.Length; i++) 
+        {
+            if(!conns[i].isUse) continue;
+            if (conns[i].player == null) return;
+            Send(conns[i], protocol);
+        }
+    }
     // 关闭
     public void Close()
     {
@@ -185,6 +257,46 @@ public class ServeNet
             }
         }
     }
+
+    /// -------------------- 心跳检测 -------------------------
+    // 主定时器
+    System.Timers.Timer timer = new System.Timers.Timer(1000);
+    // 心跳时间
+    public long heartBeatTime = 180;
+
+    // 主定时器
+    public void HandleMainTimer(object? sender, System.Timers.ElapsedEventArgs e) 
+    {
+        // 处理心跳
+        HeartBeat();
+        timer.Start();
+    }
+
+    // 心跳
+    public void HeartBeat()
+    {
+        // Console.WriteLine("[主定时器执行]");
+        long timeNow = Sys.GetTimeStamp();
+        for (int i = 0; i < conns.Length; i++)
+        {
+            Conn conn = conns[i];
+            if (conn == null) continue;
+            if (!conn.isUse) continue;
+            if (conn.lastTickTime < timeNow - heartBeatTime)
+            {
+                Console.WriteLine("[心跳引起断开连接] " + conn.GetAddress());
+                lock(conn)
+                    conn.Close();
+            }
+        }
+    }
+
+    // 消息分发
+    public HandleConnMsg handleConnMsg = new HandleConnMsg();
+    public HandlePlayerMsg handlePlayerMsg = new HandlePlayerMsg();
+    public HandlePlayerEvent handlePlayerEvent = new HandlePlayerEvent();
+
+
 
 
     
