@@ -17,6 +17,7 @@ class MainClass
         DataMgr dataMgr = new DataMgr();
         ServeNet serveNet = new ServeNet();
         Scene scene = new Scene();
+        RoomMgr roomMgr = new RoomMgr();
         serveNet.Start("127.0.0.1", 1234);
         // Console.ReadLine();
         while(true) {

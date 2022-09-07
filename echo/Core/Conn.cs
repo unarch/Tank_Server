@@ -58,7 +58,7 @@ public class Conn
         if (!isUse) return;
         if (player != null) {
             // 玩家退出处理
-            //player.Logout();
+            player.Logout();
             return;
         }
         Console.WriteLine("[断开连接]" + GetAddress());

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 
 // 处理角色协议
-public class HandlePlayerMsg
+public partial class HandlePlayerMsg
 {
     // 获取分数
     // 协议参数:
@@ -61,4 +61,18 @@ public class HandlePlayerMsg
         protocolRet.AddInt(score);
         ServeNet.instance!.Broadcast(protocolRet);
     }
+
+
+
+    // 获取玩家信息
+    public void MsgGetAchieve(Player player, ProtocolBase protocolBase)
+    {
+        ProtocolBytes protocolRet = new ProtocolBytes();
+        protocolRet.AddString("GetAchieve");
+        protocolRet.AddInt(player.data!.win);
+        protocolRet.AddInt(player.data!.fail);
+        player.Send(protocolRet);
+        Console.WriteLine("MsgGetScore " + player.id + "win : " + player.data!.win);
+    }
+
 }

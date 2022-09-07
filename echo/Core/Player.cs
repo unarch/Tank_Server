@@ -53,7 +53,7 @@ public class Player
     public bool Logout()
     {
         // *TODO: 事件处理
-        // ServeNet.instance.handlePlayerEvent.OnLogout(this);
+        ServeNet.instance!.handlePlayerEvent.OnLogout(this);
 
         // 保存
         if (!DataMgr.instance!.SavePlayer(this)) return false;
