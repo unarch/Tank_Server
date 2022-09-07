@@ -146,6 +146,64 @@ public class Room
         }
     }
 
+    private int IsWin()
+    {
+        if (status != Status.Fight) return 0;
+        int count1 = 0;
+        int count2 = 0;
+        foreach (Player player in list.Values)
+        {
+            PlayerTempData pt = player.tempData!;
+            if (pt.team == 1 && pt.hp > 0) count1 ++;
+            if( pt.team == 2 && pt.hp > 0) count2 ++;
+        }
+        if (count1 <= 0) return 2;
+        if (count2 <= 0) return 1;
+        return 0;
+
+    }
+
+    public void UpdateWin()
+    {
+        int isWin = IsWin();
+        if (isWin == 0) return;
+        // 改变状态
+        lock(list)
+        {
+            status = Status.Prepare;
+
+            foreach (Player player in list.Values)
+            {
+                player.tempData!.status = PlayerTempData.Status.Room;
+                if (player.tempData.team == isWin)
+                    player.data!.win ++;
+                else
+                    player.data!.fail ++;
+            }
+        }
+        ProtocolBytes protocol = new ProtocolBytes();
+        protocol.AddString("Result");
+        protocol.AddInt(isWin);
+        BroadCast(protocol);
+    }
+
+    // 中途退出游戏
+    public void ExitFight(Player player)
+    {
+        // 摧毁坦克
+        if (list[player.id!] != null)
+            list[player.id!].tempData!.hp = -1;
+        // 广播
+        ProtocolBytes protocolRet = new ProtocolBytes();
+        protocolRet.AddString("Hit");
+        protocolRet.AddString(player.id!);
+        protocolRet.AddString(player.id!);
+        protocolRet.AddFloat(999);
+        if (IsWin() == 0) player.data!.fail ++;
+        UpdateWin();
+
+    }
+
 }
 
 

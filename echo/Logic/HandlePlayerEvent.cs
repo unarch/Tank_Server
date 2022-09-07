@@ -22,6 +22,16 @@ public class HandlePlayerEvent
             if (room != null)
                 room.BroadCast(room.GetRoomInfo());
         }
+
+        // 战斗中退出
+        if (player.tempData!.status == PlayerTempData.Status.Fight)
+        {
+            Room room = player.tempData!.room;
+            if (room != null)
+                room.ExitFight(player);
+            RoomMgr.instance!.LeaveRoom(player);
+        }
+        
         Scene.instance!.DelPlayer(player.id!);
     }
 }
