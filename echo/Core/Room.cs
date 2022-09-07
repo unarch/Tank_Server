@@ -107,6 +107,45 @@ public class Room
         return protocol;
     }
 
+    // 房间是否可以开战
+    public bool CanStart()
+    {
+        if (status != Status.Prepare) return false;
+        int count1 = 0;
+        int count2 = 0;
+
+        foreach(Player player in list.Values)
+        {
+            if (player.tempData!.team == 1) count1 ++;
+            if (player.tempData!.team == 2) count2 ++;
+        }
+        if (count1 < 1 || count2 < 1) return false;
+        return true;
+    }
+
+    public void StartFight()
+    {
+        ProtocolBytes protocol = new ProtocolBytes();
+        protocol.AddString("Fight");
+        status = Status.Fight;
+        int teamPos1 = 1;
+        int teamPos2 = 1;
+        lock (list)
+        {
+            protocol.AddInt(list.Count);
+            foreach (Player p in list.Values)
+            {
+                p.tempData!.hp = 200;
+                protocol.AddString(p.id!);
+                protocol.AddInt(p.tempData!.team);
+                if (p.tempData.team == 1) protocol.AddInt(teamPos1++);
+                else protocol.AddInt(teamPos2++);
+                p.tempData!.status = PlayerTempData.Status.Fight;
+            }
+            BroadCast(protocol);
+        }
+    }
+
 }
 
 
